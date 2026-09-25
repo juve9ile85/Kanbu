@@ -3,7 +3,7 @@
     "id": "card-1",
     "label": "이벤트",
     "url": "https://example.com/event",
-    "image": "",
+    "image": "img/card-1-1790303502726.jpg",
     "active": true,
     "order": 1
   },
