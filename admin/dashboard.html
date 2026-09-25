@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Console — 카드 관리</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <h1 class="topbar-title">ADMIN CONSOLE</h1>
+  <div class="topbar-right">
+    <span id="session-email" class="session-email"></span>
+    <button id="clear-token-btn" class="btn-ghost">토큰 초기화</button>
+    <button id="logout-btn" class="btn-ghost">로그아웃</button>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>카드 목록</h2>
+      <div class="panel-actions">
+        <button id="add-btn" class="btn-primary">카드 추가</button>
+        <button id="publish-btn" class="btn-primary">적용</button>
+      </div>
+    </div>
+
+    <table class="table" id="cards-table">
+      <thead>
+      <tr>
+        <th style="width:40px;">#</th>
+        <th style="width:100px;">이미지</th>
+        <th style="width:160px;">라벨</th>
+        <th>URL</th>
+        <th style="width:90px;">상태</th>
+        <th style="width:110px;">순서</th>
+        <th style="width:70px;">관리</th>
+      </tr>
+      </thead>
+      <tbody id="cards-tbody"></tbody>
+    </table>
+
+    <p class="empty" id="empty-msg" hidden>등록된 카드가 없습니다.</p>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>미리보기 (유저페이지 카드)</h2>
+    </div>
+    <div class="preview" id="preview"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>저장</h2>
+    </div>
+    <p class="hint">
+      편집 내용은 이 브라우저(localStorage)에 자동 저장됩니다.<br />
+      실제 배포 반영은 <strong>GitHub에 저장</strong> 버튼을 누르세요.
+      (이미지 업로드 시 함께 커밋됩니다)
+    </p>
+    <p class="status" id="save-status">대기 중</p>
+  </section>
+
+</main>
+
+<script src="./dashboard.js"></script>
+</body>
+</html>

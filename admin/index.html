@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Console — 로그인</title>
+  <link rel="stylesheet" href="/admin/style.css" />
+</head>
+<body>
+<main class="login-wrap">
+  <div class="login-card">
+    <header class="login-header">
+      <h1>ADMIN CONSOLE</h1>
+      <p>관리자 계정으로 로그인하세요.</p>
+    </header>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="email">이메일</label>
+        <input id="email" type="email" autocomplete="username" required />
+      </div>
+
+      <div class="field">
+        <label for="password">비밀번호</label>
+        <input id="password" type="password" autocomplete="current-password" required />
+      </div>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <button type="submit" id="submit-btn">로그인</button>
+    </form>
+
+    <footer class="login-footer">
+      <span>© 2026 Company. All rights reserved.</span>
+    </footer>
+  </div>
+</main>
+
+<script src="/admin/auth.js"></script>
+</body>
+</html>
