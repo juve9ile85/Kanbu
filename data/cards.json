@@ -1,29 +1,20 @@
 [
   {
-    "id": "card-jx90dmk",
-    "label": "AK",
+    "id": "card-1",
+    "label": "이벤트",
     "url": "https://example.com/event",
-    "adminUrl": "https://example.com/event",
-    "image": "img/card-jx90dmk-1790308297504.webp",
+    "adminUrl": "",
+    "image": "",
     "active": true,
     "order": 1
   },
   {
-    "id": "card-1",
-    "label": "금두꺼비",
-    "url": "https://example.com/event",
-    "adminUrl": "",
-    "image": "",
-    "active": true,
-    "order": 2
-  },
-  {
     "id": "card-2",
-    "label": "불곰",
+    "label": "공지사항",
     "url": "https://example.com/notice",
     "adminUrl": "",
     "image": "",
     "active": true,
-    "order": 3
+    "order": 2
   }
 ]
