@@ -16,5 +16,14 @@
     "image": "",
     "active": true,
     "order": 2
+  },
+  {
+    "id": "card-2ikuuzf",
+    "label": "캐논",
+    "url": "https://example.com/notice",
+    "adminUrl": "",
+    "image": "",
+    "active": true,
+    "order": 3
   }
 ]
