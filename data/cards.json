@@ -14,7 +14,7 @@
     "url": "https://example.com/notice",
     "adminUrl": "",
     "image": "",
-    "active": false,
+    "active": true,
     "order": 2
   }
 ]
