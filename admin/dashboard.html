@@ -19,6 +19,8 @@
 
 <main class="page">
 
+
+
   <section class="panel">
     <div class="panel-head">
       <h2>카드 목록</h2>
@@ -64,7 +66,25 @@
     </p>
     <p class="status" id="save-status">대기 중</p>
   </section>
-
+  <!-- 관리자페이지 URL 입력 모달 -->
+  <div class="modal-backdrop" id="admin-url-modal" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h3>관리자페이지 주소</h3>
+        <button class="modal-close" id="modal-close-btn" aria-label="닫기">×</button>
+      </div>
+      <div class="modal-body">
+        <label for="admin-url-input" class="modal-label">URL</label>
+        <input id="admin-url-input" type="url" placeholder="https://" />
+        <p class="modal-hint" id="modal-hint"></p>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-ghost" id="modal-cancel-btn">취소</button>
+        <button class="btn-ghost" id="modal-clear-btn">삭제</button>
+        <button class="btn-primary" id="modal-save-btn">저장</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script src="./dashboard.js"></script>
