@@ -47,18 +47,43 @@ const DEFAULT_DATA = [
   { id: 'card-2', label: '공지사항', url: 'https://example.com/notice', adminUrl: '', image: '', active: true, order: 2 },
 ];
 
-let cards = load();
+let cards = [];
 
-function load() {
+// ── 부트스트랩: fetch 우선 → localStorage 폴백 → 기본값 ──
+(async function boot() {
+  setStatus('데이터 불러오는 중…');
+  cards = await loadCards();
+  render();
+  setStatus('대기 중');
+})();
+
+async function loadCards() {
+  // 1) GitHub Pages의 cards.json 먼저 시도 (캐시 우회)
+  try {
+    const res = await fetch(`./data/cards.json?t=${Date.now()}`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        return data.map((c) => ({ image: '', adminUrl: '', ...c }));
+      }
+    }
+  } catch (err) {
+    console.warn('[admin] cards.json 로드 실패, localStorage 폴백:', err);
+  }
+
+  // 2) localStorage 폴백
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [...DEFAULT_DATA];
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [...DEFAULT_DATA];
-    return parsed.map((c) => ({ image: '', adminUrl: '', ...c }));
-  } catch (_) {
-    return [...DEFAULT_DATA];
-  }
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.map((c) => ({ image: '', adminUrl: '', ...c }));
+      }
+    }
+  } catch (_) {}
+
+  // 3) 그래도 없으면 기본값
+  return [...DEFAULT_DATA];
 }
 
 function save() {
@@ -136,7 +161,7 @@ function renderThumbInner(card) {
     return `<img src="data:image/${ext};base64,${card._pendingImage.base64}" alt="" />`;
   }
   if (card.image) {
-    return `<img src="../${card.image}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';" />
+    return `<img src="./${card.image}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';" />
             <span class="thumb-empty" style="display:none">+</span>`;
   }
   return `<span class="thumb-empty">+</span>`;
@@ -223,7 +248,6 @@ tbody.addEventListener('click', (e) => {
   if (!btn) return;
   const { action, id } = btn.dataset;
 
-  // 관리자페이지 URL 모달
   if (action === 'edit-admin') {
     openAdminUrlModal(id);
     return;
@@ -375,7 +399,7 @@ function renderPreview() {
         return `<img src="data:image/${ext};base64,${card._pendingImage.base64}" alt="" />`;
       }
       if (card.image) {
-        return `<img src="../${card.image}" alt="" />`;
+        return `<img src="./${card.image}" alt="" />`;
       }
       return '';
     })();
@@ -511,6 +535,3 @@ function extOf(name) {
   const m = String(name).match(/\.([a-z0-9]+)$/i);
   return m ? m[1].toLowerCase() : 'png';
 }
-
-// ── 초기 렌더 ──
-render();
