@@ -2,21 +2,16 @@
 //    "진짜 인증"이 아니라 "접근 제한 수준"으로만 사용.
 //    진짜 보안이 필요하면 Firebase Auth / Supabase Auth 등 사용.
 
-const ADMIN_EMAIL = 'admin@example.com';
+const ADMIN_EMAIL = 'admin@kanbu.com';
 const ADMIN_PASSWORD_HASH =
   'e219ceb09fc7a678d10e992971331dbd5afe5f2a6f020216b82dd92162a20362'; // "password" sha256
 
 const SESSION_KEY = 'admin_session';
 const SESSION_TTL = 1000 * 60 * 60 * 2; // 2시간
 
-// ⚠️ GitHub Pages 서브패스 배포 대응
-//    - 사용자 페이지(username.github.io): BASE_PATH = ''
-//    - 프로젝트 페이지(username.github.io/repo): BASE_PATH = '/repo'
-//    로컬 테스트 시엔 '' 로 두면 됨.
-const BASE_PATH = '';
-
-const LOGIN_URL = `${BASE_PATH}/admin/index.html`;
-const DASHBOARD_URL = `${BASE_PATH}/admin/dashboard.html`;
+// 상대경로 사용 (BASE_PATH 불필요)
+const LOGIN_URL = './index.html';
+const DASHBOARD_URL = './dashboard.html';
 
 async function sha256(str) {
   const buf = new TextEncoder().encode(str);
