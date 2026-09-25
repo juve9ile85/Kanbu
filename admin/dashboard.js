@@ -5,7 +5,7 @@ const GH = {
   owner: 'juve9ile85',
   repo: 'kanbu',
   branch: 'main',
-  path: '../data/cards.json',
+  path: 'data/cards.json',
   token: '',   // 최초 저장 시 프롬프트로 입력 → localStorage 보관
 };
 
@@ -60,7 +60,7 @@ let cards = [];
 async function loadCards() {
   // 1) GitHub Pages의 cards.json 먼저 시도 (캐시 우회)
   try {
-    const res = await fetch(`./data/cards.json?t=${Date.now()}`, { cache: 'no-store' });
+    const res = await fetch(`../data/cards.json?t=${Date.now()}`, { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data)) {
