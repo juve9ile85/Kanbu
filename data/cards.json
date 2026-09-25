@@ -1,0 +1,18 @@
+[
+  {
+    "id": "card-1",
+    "label": "이벤트",
+    "url": "https://example.com/event",
+    "image": "",
+    "active": true,
+    "order": 1
+  },
+  {
+    "id": "card-2",
+    "label": "공지사항",
+    "url": "https://example.com/notice",
+    "image": "",
+    "active": true,
+    "order": 2
+  }
+]
