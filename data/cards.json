@@ -1,7 +1,7 @@
 [
   {
     "id": "card-jx90dmk",
-    "label": "새 카드",
+    "label": "AK",
     "url": "https://example.com/event",
     "adminUrl": "https://example.com/event",
     "image": "img/card-jx90dmk-1790308297504.webp",
@@ -10,7 +10,7 @@
   },
   {
     "id": "card-1",
-    "label": "이벤트",
+    "label": "금두꺼비",
     "url": "https://example.com/event",
     "adminUrl": "",
     "image": "",
@@ -19,7 +19,7 @@
   },
   {
     "id": "card-2",
-    "label": "공지사항",
+    "label": "불곰",
     "url": "https://example.com/notice",
     "adminUrl": "",
     "image": "",
