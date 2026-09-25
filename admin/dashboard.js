@@ -43,8 +43,8 @@ document.getElementById('clear-token-btn')?.addEventListener('click', () => {
 // ── 상태 ──
 const STORAGE_KEY = 'admin_cards';
 const DEFAULT_DATA = [
-  { id: 'card-1', label: '이벤트', url: 'https://example.com/event', image: '', active: true, order: 1 },
-  { id: 'card-2', label: '공지사항', url: 'https://example.com/notice', image: '', active: true, order: 2 },
+  { id: 'card-1', label: '이벤트', url: 'https://example.com/event', adminUrl: '', image: '', active: true, order: 1 },
+  { id: 'card-2', label: '공지사항', url: 'https://example.com/notice', adminUrl: '', image: '', active: true, order: 2 },
 ];
 
 let cards = load();
@@ -55,7 +55,7 @@ function load() {
     if (!raw) return [...DEFAULT_DATA];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [...DEFAULT_DATA];
-    return parsed.map((c) => ({ image: '', ...c }));
+    return parsed.map((c) => ({ image: '', adminUrl: '', ...c }));
   } catch (_) {
     return [...DEFAULT_DATA];
   }
@@ -114,7 +114,13 @@ function render() {
         <button class="btn-mini" data-action="up" data-id="${card.id}">▲</button>
         <button class="btn-mini" data-action="down" data-id="${card.id}">▼</button>
       </td>
-      <td>
+      <td class="manage-cell">
+        ${
+      card.adminUrl
+        ? `<a class="btn-mini admin-link" href="${escapeAttr(card.adminUrl)}" target="_blank" rel="noopener noreferrer" title="${escapeAttr(card.adminUrl)}">관리자</a>`
+        : ''
+    }
+        <button class="btn-mini" data-action="edit-admin" data-id="${card.id}">관리자페이지</button>
         <button class="btn-mini danger" data-action="delete" data-id="${card.id}">삭제</button>
       </td>
     `;
@@ -203,7 +209,7 @@ tbody.addEventListener('change', async (e) => {
 
     save();
     render();
-    setStatus('이미지 선택됨 — "GitHub에 저장"을 눌러 반영하세요');
+    setStatus('이미지 선택됨 — "적용"을 눌러 반영하세요');
   } catch (err) {
     alert('이미지 처리 실패: ' + err.message);
   } finally {
@@ -211,11 +217,18 @@ tbody.addEventListener('change', async (e) => {
   }
 });
 
-// ── 클릭 이벤트 (순서/삭제) ──
+// ── 클릭 이벤트 (순서/삭제/관리자페이지) ──
 tbody.addEventListener('click', (e) => {
   const btn = e.target.closest('button[data-action]');
   if (!btn) return;
   const { action, id } = btn.dataset;
+
+  // 관리자페이지 URL 모달
+  if (action === 'edit-admin') {
+    openAdminUrlModal(id);
+    return;
+  }
+
   const card = cards.find((c) => c.id === id);
   if (!card) return;
 
@@ -251,12 +264,83 @@ document.getElementById('add-btn').addEventListener('click', () => {
     id: uid(),
     label: '새 카드',
     url: '',
+    adminUrl: '',
     image: '',
     active: true,
     order: maxOrder + 1,
   });
   save();
   render();
+});
+
+// ═══════════════════════════════════════════════════════
+// 관리자페이지 URL 모달
+// ═══════════════════════════════════════════════════════
+const modalEl = document.getElementById('admin-url-modal');
+const modalInput = document.getElementById('admin-url-input');
+const modalHint = document.getElementById('modal-hint');
+let editingCardId = null;
+
+function openAdminUrlModal(cardId) {
+  const card = cards.find((c) => c.id === cardId);
+  if (!card) return;
+  editingCardId = cardId;
+  modalInput.value = card.adminUrl || '';
+  modalHint.textContent = `카드: ${card.label || '(제목 없음)'}`;
+  modalEl.hidden = false;
+  setTimeout(() => modalInput.focus(), 0);
+}
+
+function closeAdminUrlModal() {
+  modalEl.hidden = true;
+  editingCardId = null;
+  modalInput.value = '';
+  modalHint.textContent = '';
+}
+
+function saveAdminUrl() {
+  const card = cards.find((c) => c.id === editingCardId);
+  if (!card) return;
+  const value = modalInput.value.trim();
+
+  if (value && !/^https?:\/\//i.test(value)) {
+    alert('http:// 또는 https:// 로 시작하는 URL을 입력하세요.');
+    return;
+  }
+
+  card.adminUrl = value;
+  save();
+  closeAdminUrlModal();
+  render();
+}
+
+function clearAdminUrl() {
+  const card = cards.find((c) => c.id === editingCardId);
+  if (!card) return;
+  card.adminUrl = '';
+  save();
+  closeAdminUrlModal();
+  render();
+}
+
+document.getElementById('modal-save-btn').addEventListener('click', saveAdminUrl);
+document.getElementById('modal-clear-btn').addEventListener('click', clearAdminUrl);
+document.getElementById('modal-cancel-btn').addEventListener('click', closeAdminUrlModal);
+document.getElementById('modal-close-btn').addEventListener('click', closeAdminUrlModal);
+
+modalEl.addEventListener('click', (e) => {
+  if (e.target === modalEl) closeAdminUrlModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !modalEl.hidden) closeAdminUrlModal();
+});
+
+modalInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    saveAdminUrl();
+  }
 });
 
 // ── 미리보기 ──
@@ -336,8 +420,11 @@ async function publishToGitHub() {
 
     setStatus('cards.json 커밋 중…');
     const content = JSON.stringify(
-      cards.map(({ id, label, url, image, active, order }) => ({
-        id, label, url, image: image || '', active, order,
+      cards.map(({ id, label, url, adminUrl, image, active, order }) => ({
+        id, label, url,
+        adminUrl: adminUrl || '',
+        image: image || '',
+        active, order,
       })),
       null,
       2
