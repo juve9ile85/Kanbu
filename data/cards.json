@@ -1,7 +1,7 @@
 [
   {
     "id": "card-1",
-    "label": "이벤트",
+    "label": "AK",
     "url": "https://example.com/event",
     "adminUrl": "",
     "image": "",
@@ -10,7 +10,7 @@
   },
   {
     "id": "card-2",
-    "label": "공지사항",
+    "label": "금두꺼비",
     "url": "https://example.com/notice",
     "adminUrl": "",
     "image": "",
