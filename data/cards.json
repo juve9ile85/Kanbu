@@ -1,11 +1,19 @@
 [
   {
+    "id": "card-jx90dmk",
+    "label": "새 카드",
+    "url": "",
+    "image": "",
+    "active": true,
+    "order": 1
+  },
+  {
     "id": "card-1",
     "label": "이벤트",
     "url": "https://example.com/event",
-    "image": "img/card-1-1790303502726.jpg",
+    "image": "",
     "active": true,
-    "order": 1
+    "order": 2
   },
   {
     "id": "card-2",
@@ -13,6 +21,6 @@
     "url": "https://example.com/notice",
     "image": "",
     "active": true,
-    "order": 2
+    "order": 3
   }
 ]
