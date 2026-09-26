@@ -3,7 +3,7 @@
     "id": "card-1",
     "label": "AK",
     "url": "https://akgame.kr/",
-    "adminUrl": "",
+    "adminUrl": "https://example.com/",
     "image": "img/card-1-1790381846932.png",
     "active": true,
     "order": 1
