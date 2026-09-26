@@ -13,7 +13,7 @@
     "label": "조커",
     "url": "https://example.com/notice",
     "adminUrl": "",
-    "image": "",
+    "image": "img/card-2ikuuzf-1790385100057.jpg",
     "active": true,
     "order": 2
   },
@@ -25,14 +25,5 @@
     "image": "img/card-2-1790384195370.jpg",
     "active": true,
     "order": 3
-  },
-  {
-    "id": "card-9ana5n7",
-    "label": "새 카드",
-    "url": "",
-    "adminUrl": "",
-    "image": "",
-    "active": true,
-    "order": 4
   }
 ]
