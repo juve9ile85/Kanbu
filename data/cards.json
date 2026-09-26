@@ -2,9 +2,9 @@
   {
     "id": "card-1",
     "label": "AK",
-    "url": "https://example.com/event",
+    "url": "https://akgame.kr/",
     "adminUrl": "",
-    "image": "",
+    "image": "img/card-1-1790381846932.png",
     "active": true,
     "order": 1
   },
